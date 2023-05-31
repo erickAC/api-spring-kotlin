@@ -1,6 +1,7 @@
 package com.api.produto.services
 
 import com.api.produto.entities.Product
+import com.api.produto.models.ObjectNotFoundException
 import com.api.produto.repositories.ProductRepository
 import org.springframework.stereotype.Service
 
@@ -13,7 +14,7 @@ class ProductService constructor(private val repository: ProductRepository) : Se
     }
 
     override fun findById(id: Int): Product{
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow { throw ObjectNotFoundException("Produto não encontrado: $id") };
     }
 
     override fun delete(id: Int) {
